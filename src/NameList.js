@@ -5,5 +5,5 @@ function Name({ name }) {
 }
 
 export default function NameList({ names }) {
-  return names.map((name, index) => <Name name={name} key={index} />);
+  return names.map((name) => <Name name={name.name} key={name.id} />);
 }
