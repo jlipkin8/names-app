@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './UserInputForm.module.css';
+import { filterByLetter, filterBySyllable } from './utils';
 
 function FirstLetterInput({ letter, setLetter }) {
   function handleLetter(event) {
     const newLetter = event.target.value;
-    console.log('newLetter', newLetter);
     setLetter(newLetter);
   }
   return (
@@ -21,8 +21,7 @@ function FirstLetterInput({ letter, setLetter }) {
   );
 }
 
-function SyllableSlider() {
-  const [numOfSyllables, setNumOfSyllables] = React.useState(1);
+function SyllableSlider({ numOfSyllables, setNumOfSyllables }) {
   function handleSlider(event) {
     setNumOfSyllables(event.target.value);
   }
@@ -32,7 +31,7 @@ function SyllableSlider() {
         type="range"
         id="syllable"
         name="syllable-number"
-        min="1"
+        min="0"
         max="10"
         value={numOfSyllables}
         step="1"
@@ -44,23 +43,39 @@ function SyllableSlider() {
     </div>
   );
 }
-function UserInputForm({ letter, setLetter, names, setNames }) {
+function UserInputForm({
+  letter,
+  setLetter,
+  names,
+  setNames,
+  setDisplayedNames,
+  numOfSyllables,
+  setNumOfSyllables,
+}) {
   function handleSubmit(event) {
     event.preventDefault();
-    // filter names here
-    const filteredNames = names.filter((name) => {
-      return name.name.startsWith(letter.toUpperCase());
-    });
-    console.log('filteredNames', filteredNames);
-    setNames(filteredNames);
+    let filteredNames = [...names];
+    if (letter) {
+      filteredNames = filterByLetter(filteredNames, letter);
+    }
+    if (numOfSyllables) {
+      const convertedNum = Number.parseInt(numOfSyllables, 10);
+      filteredNames = filterBySyllable(filteredNames, convertedNum);
+    }
+    setDisplayedNames(filteredNames);
+    setLetter('');
   }
+  console.log('numOfSyllables', numOfSyllables);
   return (
     <form onSubmit={handleSubmit}>
       <FirstLetterInput
         letter={letter}
         setLetter={setLetter}
       ></FirstLetterInput>
-      <SyllableSlider></SyllableSlider>
+      <SyllableSlider
+        numOfSyllables={numOfSyllables}
+        setNumOfSyllables={setNumOfSyllables}
+      ></SyllableSlider>
       <button className={styles.button}>Find!</button>
     </form>
   );
