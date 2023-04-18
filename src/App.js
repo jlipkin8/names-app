@@ -7,7 +7,7 @@ import { NAMES } from './names';
 function App() {
   const [names, setNames] = React.useState(NAMES);
   const [displayedNames, setDisplayedNames] = React.useState([]);
-  const [letter, setLetter] = React.useState('');
+  const [letters, setLetters] = React.useState('');
   const [numOfSyllables, setNumOfSyllables] = React.useState(0);
 
   return (
@@ -15,8 +15,8 @@ function App() {
       <header className="header">Find A Name</header>
       <UserInputForm
         className="sidebar"
-        letter={letter}
-        setLetter={setLetter}
+        letters={letters}
+        setLetters={setLetters}
         names={names}
         setNames={setNames}
         setDisplayedNames={setDisplayedNames}
