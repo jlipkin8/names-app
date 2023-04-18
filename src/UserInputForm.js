@@ -1,23 +1,46 @@
 import React from 'react';
 import styles from './UserInputForm.module.css';
-import { filterByLetter, filterBySyllable } from './utils';
+import { filterByLetters, filterBySyllable } from './utils';
 
-function FirstLetterInput({ letter, setLetter }) {
-  function handleLetter(event) {
+function LettersInput({ letters, setLetters }) {
+  const [lettersPosition, setLettersPosition] =
+    React.useState('starts-with');
+
+  function handleLetters(event) {
     const newLetter = event.target.value;
-    setLetter(newLetter);
+    setLetters(newLetter);
   }
   return (
-    <>
-      <label htmlFor="first-letter-field">First Letter:</label>
+    <div>
+      <input
+        type="radio"
+        name="letters-position"
+        id="starts-with"
+        value="starts-with"
+        checked={lettersPosition === 'starts-with'}
+        onChange={(event) => {
+          setLettersPosition(event.target.value);
+        }}
+      />
+      <label htmlFor="starts-with">Starts With</label>
+      <input
+        type="radio"
+        name="letters-position"
+        id="ends-with"
+        value="ends-with"
+        checked={lettersPosition === 'ends-with'}
+        onChange={(event) => {
+          setLettersPosition(event.target.value);
+        }}
+      />
+      <label htmlFor="starts-with">Ends With</label> <br />
       <input
         id="first-letter-field"
-        value={letter}
-        maxLength="1"
-        onChange={handleLetter}
+        value={letters}
+        maxLength="5"
+        onChange={handleLetters}
       />
-      <span>Enter the first letter for the name</span>
-    </>
+    </div>
   );
 }
 
@@ -44,10 +67,9 @@ function SyllableSlider({ numOfSyllables, setNumOfSyllables }) {
   );
 }
 function UserInputForm({
-  letter,
-  setLetter,
+  letters,
+  setLetters,
   names,
-  setNames,
   setDisplayedNames,
   numOfSyllables,
   setNumOfSyllables,
@@ -55,23 +77,23 @@ function UserInputForm({
   function handleSubmit(event) {
     event.preventDefault();
     let filteredNames = [...names];
-    if (letter) {
-      filteredNames = filterByLetter(filteredNames, letter);
+    if (letters) {
+      filteredNames = filterByLetters(filteredNames, letters);
+      console.log('filteredNames', filteredNames);
     }
     if (numOfSyllables) {
       const convertedNum = Number.parseInt(numOfSyllables, 10);
       filteredNames = filterBySyllable(filteredNames, convertedNum);
     }
     setDisplayedNames(filteredNames);
-    setLetter('');
+    setLetters('');
   }
-  console.log('numOfSyllables', numOfSyllables);
   return (
     <form onSubmit={handleSubmit}>
-      <FirstLetterInput
-        letter={letter}
-        setLetter={setLetter}
-      ></FirstLetterInput>
+      <LettersInput
+        letters={letters}
+        setLetters={setLetters}
+      ></LettersInput>
       <SyllableSlider
         numOfSyllables={numOfSyllables}
         setNumOfSyllables={setNumOfSyllables}
