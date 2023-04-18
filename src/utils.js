@@ -1,6 +1,6 @@
-export function filterByLetter(names, letter) {
+export function filterByLetters(names, letters) {
   return names.filter((name) => {
-    return name.name.startsWith(letter.toUpperCase());
+    return name.name.toUpperCase().startsWith(letters.toUpperCase());
   });
 }
 
