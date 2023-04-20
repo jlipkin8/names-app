@@ -2,10 +2,12 @@ import React from 'react';
 import styles from './UserInputForm.module.css';
 import { filterByLetters, filterBySyllable } from './utils';
 
-function LettersInput({ letters, setLetters }) {
-  const [lettersPosition, setLettersPosition] =
-    React.useState('starts-with');
-
+function LettersInput({
+  letters,
+  setLetters,
+  lettersPosition,
+  setLettersPosition,
+}) {
   function handleLetters(event) {
     const newLetter = event.target.value;
     setLetters(newLetter);
@@ -73,13 +75,18 @@ function UserInputForm({
   setDisplayedNames,
   numOfSyllables,
   setNumOfSyllables,
+  lettersPosition,
+  setLettersPosition,
 }) {
   function handleSubmit(event) {
     event.preventDefault();
     let filteredNames = [...names];
     if (letters) {
-      filteredNames = filterByLetters(filteredNames, letters);
-      console.log('filteredNames', filteredNames);
+      filteredNames = filterByLetters(
+        filteredNames,
+        letters,
+        lettersPosition
+      );
     }
     if (numOfSyllables) {
       const convertedNum = Number.parseInt(numOfSyllables, 10);
@@ -93,6 +100,8 @@ function UserInputForm({
       <LettersInput
         letters={letters}
         setLetters={setLetters}
+        lettersPosition={lettersPosition}
+        setLettersPosition={setLettersPosition}
       ></LettersInput>
       <SyllableSlider
         numOfSyllables={numOfSyllables}
