@@ -9,6 +9,8 @@ function App() {
   const [displayedNames, setDisplayedNames] = React.useState([]);
   const [letters, setLetters] = React.useState('');
   const [numOfSyllables, setNumOfSyllables] = React.useState(0);
+  const [lettersPosition, setLettersPosition] =
+    React.useState('starts-with');
 
   return (
     <div className="App">
@@ -22,6 +24,8 @@ function App() {
         setDisplayedNames={setDisplayedNames}
         numOfSyllables={numOfSyllables}
         setNumOfSyllables={setNumOfSyllables}
+        lettersPosition={lettersPosition}
+        setLettersPosition={setLettersPosition}
       />
       <NameList className="content" names={displayedNames} />
     </div>
