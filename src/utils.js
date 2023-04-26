@@ -17,3 +17,7 @@ export function filterBySyllable(names, numOfSyllables) {
     return name.syllables === numOfSyllables;
   });
 }
+
+export function range(size, startAt = 1) {
+  return [...Array(size).keys()].map((i) => i + startAt);
+}
