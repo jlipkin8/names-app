@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './UserInputForm.module.css';
-import { filterByLetters, filterBySyllable } from './utils';
+import { filterByLetters, filterBySyllable, range } from './utils';
 
 function LettersInput({
   letters,
@@ -46,25 +46,28 @@ function LettersInput({
   );
 }
 
-function SyllableSlider({ numOfSyllables, setNumOfSyllables }) {
-  function handleSlider(event) {
+function SyllableNumDropDown({ numOfSyllables, setNumOfSyllables }) {
+  const OPTIONS = range(6);
+  function handleSelect(event) {
     setNumOfSyllables(event.target.value);
   }
   return (
     <div>
-      <input
-        type="range"
-        id="syllable"
-        name="syllable-number"
-        min="0"
-        max="10"
+      <label htmlFor="syllable-num">Number of syllables:</label>
+      <select
+        id="syllable-num"
         value={numOfSyllables}
-        step="1"
-        onChange={handleSlider}
-      />
-      <label htmlFor="syllable">
-        Syllable Number: {numOfSyllables}
-      </label>
+        onChange={handleSelect}
+      >
+        <option key="any" value="any">
+          {'Any'}
+        </option>
+        {OPTIONS.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
@@ -88,7 +91,7 @@ function UserInputForm({
         lettersPosition
       );
     }
-    if (numOfSyllables) {
+    if (numOfSyllables !== 'any') {
       const convertedNum = Number.parseInt(numOfSyllables, 10);
       filteredNames = filterBySyllable(filteredNames, convertedNum);
     }
@@ -103,10 +106,10 @@ function UserInputForm({
         lettersPosition={lettersPosition}
         setLettersPosition={setLettersPosition}
       ></LettersInput>
-      <SyllableSlider
+      <SyllableNumDropDown
         numOfSyllables={numOfSyllables}
         setNumOfSyllables={setNumOfSyllables}
-      ></SyllableSlider>
+      ></SyllableNumDropDown>
       <button className={styles.button}>Find!</button>
     </form>
   );
