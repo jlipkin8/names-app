@@ -8,7 +8,7 @@ function App() {
   const [names, setNames] = React.useState(NAMES);
   const [displayedNames, setDisplayedNames] = React.useState([]);
   const [letters, setLetters] = React.useState('');
-  const [numOfSyllables, setNumOfSyllables] = React.useState(0);
+  const [numOfSyllables, setNumOfSyllables] = React.useState('any');
   const [lettersPosition, setLettersPosition] =
     React.useState('starts-with');
 

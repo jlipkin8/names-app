@@ -13,7 +13,7 @@ function LettersInput({
     setLetters(newLetter);
   }
   return (
-    <div>
+    <div className={styles.formsection}>
       <input
         type="radio"
         name="letters-position"
@@ -52,7 +52,7 @@ function SyllableNumDropDown({ numOfSyllables, setNumOfSyllables }) {
     setNumOfSyllables(event.target.value);
   }
   return (
-    <div>
+    <div className={styles.formsection}>
       <label htmlFor="syllable-num">Number of syllables:</label>
       <select
         id="syllable-num"
@@ -72,6 +72,7 @@ function SyllableNumDropDown({ numOfSyllables, setNumOfSyllables }) {
   );
 }
 function UserInputForm({
+  className,
   letters,
   setLetters,
   names,
@@ -99,7 +100,7 @@ function UserInputForm({
     setLetters('');
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={className} onSubmit={handleSubmit}>
       <LettersInput
         letters={letters}
         setLetters={setLetters}
