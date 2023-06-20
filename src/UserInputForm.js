@@ -1,13 +1,11 @@
 import React from 'react';
 import styles from './UserInputForm.module.css';
 import { filterByLetters, filterBySyllable, range } from './utils';
+import { FormContext } from './UserFormProvider';
 
-function LettersInput({
-  letters,
-  setLetters,
-  lettersPosition,
-  setLettersPosition,
-}) {
+function LettersInput() {
+  const { letters, setLetters, lettersPosition, setLettersPosition } =
+    React.useContext(FormContext);
   function handleLetters(event) {
     const newLetter = event.target.value;
     setLetters(newLetter);
@@ -46,7 +44,9 @@ function LettersInput({
   );
 }
 
-function SyllableNumDropDown({ numOfSyllables, setNumOfSyllables }) {
+function SyllableNumDropDown() {
+  const { numOfSyllables, setNumOfSyllables } =
+    React.useContext(FormContext);
   const OPTIONS = range(6);
   function handleSelect(event) {
     setNumOfSyllables(event.target.value);
@@ -71,17 +71,17 @@ function SyllableNumDropDown({ numOfSyllables, setNumOfSyllables }) {
     </div>
   );
 }
-function UserInputForm({
-  className,
-  letters,
-  setLetters,
-  names,
-  setDisplayedNames,
-  numOfSyllables,
-  setNumOfSyllables,
-  lettersPosition,
-  setLettersPosition,
-}) {
+function UserInputForm() {
+  const {
+    className,
+    names,
+    setDisplayedNames,
+    letters,
+    setLetters,
+    lettersPosition,
+    numOfSyllables,
+  } = React.useContext(FormContext);
+
   function handleSubmit(event) {
     event.preventDefault();
     let filteredNames = [...names];
@@ -101,16 +101,8 @@ function UserInputForm({
   }
   return (
     <form className={className} onSubmit={handleSubmit}>
-      <LettersInput
-        letters={letters}
-        setLetters={setLetters}
-        lettersPosition={lettersPosition}
-        setLettersPosition={setLettersPosition}
-      ></LettersInput>
-      <SyllableNumDropDown
-        numOfSyllables={numOfSyllables}
-        setNumOfSyllables={setNumOfSyllables}
-      ></SyllableNumDropDown>
+      <LettersInput></LettersInput>
+      <SyllableNumDropDown></SyllableNumDropDown>
       <button className={styles.button}>Find!</button>
     </form>
   );
