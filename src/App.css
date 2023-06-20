@@ -3,15 +3,20 @@
   background-color: #ffffff50;
   width: 100%;
   font-size: calc(20px + 2vmin);
-  color: #000000;
+  color: hsl(250deg 80% 80% / 0.6);
+  border-radius: 4px;
 }
 
 .sidebar {
-  grid-area: sidebar;
   margin-top: 10px;
   background-color: #ffffff50;
+  outline: 2px dashed hsl(250deg 80% 80% / 0.6);
+  outline-offset: 4px;
+  border-radius: 4px;
+  color: black;
+  padding: 16px;
+  margin-top: 32px;
 }
-
 .content {
   grid-area: content;
 }
@@ -24,11 +29,12 @@ body {
   );
 }
 .App {
-  width: 70%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(min-content, 300px));
-  grid-template-rows: 3em 80%;
-  grid-template-areas: 'header header' 'sidebar content';
-  gap: 10px;
-  margin: 0 auto 0;
+  padding: 64px 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 16px;
+  min-height: 3rem;
 }
